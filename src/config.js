@@ -15,6 +15,8 @@ export const SITE = {
   // para não contar as visitas a dobrar.
   analytics: '',
   lote: '068',
+  // Página oficial do evento (GDG Faro). Ligada na etiqueta do topo da /devfest.
+  devfest: 'https://gdg.community.dev/events/details/google-gdg-faro-presents-devfest-2026-build-secure-amp-scale-in-the-agentic-era/',
 };
 
 // Link do Instagram que abre a app no telemóvel quando ela existe e, sem app, abre o browser.

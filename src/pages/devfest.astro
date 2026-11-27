@@ -1,5 +1,6 @@
 ---
 import Landing from '../layouts/Landing.astro';
+import { SITE } from '../config.js';
 ---
 <Landing
   titulo="Wake n Bake no DevFest · entra na lista"
@@ -8,6 +9,8 @@ import Landing from '../layouts/Landing.astro';
   indexar={false}
   origem="devfest"
   etiqueta="DEVFEST 2026"
+  etiquetaLink={SITE.devfest}
+  etiquetaLinkNome="DevFest 2026 do GDG Faro"
   sticker="DEVFEST"
   linha1="já provaste"
   linha2="agora entra na"

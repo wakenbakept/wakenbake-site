@@ -1,12 +1,18 @@
 ---
-interface Props { etiqueta?: string; }
-const { etiqueta = 'FARO' } = Astro.props;
+interface Props { etiqueta?: string; link?: string; linkNome?: string; }
+const { etiqueta = 'FARO', link, linkNome } = Astro.props;
 ---
 <header class="topo">
   <a href="/" class="topo-logo" aria-label="Wake n Bake, início">
     <img src="/img/logo-linha.svg" alt="" width="196" height="18" />
   </a>
-  <span class="etiqueta">{etiqueta}</span>
+  {link ? (
+    <a class="etiqueta topo-link" href={link} target="_blank" rel="noopener" aria-label={`${linkNome ?? etiqueta} (abre noutro separador)`}>
+      {etiqueta}<span aria-hidden="true"> ↗</span>
+    </a>
+  ) : (
+    <span class="etiqueta">{etiqueta}</span>
+  )}
 </header>
 
 <style>
@@ -16,4 +22,6 @@ const { etiqueta = 'FARO' } = Astro.props;
   }
   .topo-logo img { width: clamp(150px, 40vw, 196px); height: auto; }
   .topo .etiqueta { font-size: 11px; }
+  .topo-link { color: var(--betao); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 4px; }
+  .topo-link:hover { color: var(--osso); }
 </style>
