@@ -18,6 +18,8 @@ interface Props {
   indexar?: boolean;
   origem: 'devfest' | 'site';
   etiqueta: string;
+  ogImagem?: string;
+  ogAlt?: string;
   etiquetaLink?: string;
   etiquetaLinkNome?: string;
   sticker: string;
@@ -27,7 +29,7 @@ interface Props {
 }
 const p = Astro.props;
 ---
-<Base titulo={p.titulo} descricao={p.descricao} caminho={p.caminho} indexar={p.indexar}>
+<Base titulo={p.titulo} descricao={p.descricao} caminho={p.caminho} indexar={p.indexar} ogImagem={p.ogImagem} ogAlt={p.ogAlt}>
   <Grao />
   <Topo etiqueta={p.etiqueta} link={p.etiquetaLink} linkNome={p.etiquetaLinkNome} />
   <main>

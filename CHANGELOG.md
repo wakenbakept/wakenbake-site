@@ -12,3 +12,8 @@ Aprovada pelo António a 27/11/2026, depois de testar o staging no iPhone.
 - Estatística sem cookies (Cloudflare Web Analytics, modo automático); sem aviso de cookies.
 - Imagem de partilha (og.png), cabeçalhos de segurança, robots.txt aberto a pesquisa e IA, sitemap, security.txt.
 - Na /devfest, «DEVFEST 2026 ↗» liga à página oficial do evento.
+
+## v0.1.1 · por publicar
+- Email de confirmação: logo como selo preto com margem. No Gmail do iPhone em modo escuro, o email é invertido para claro e o logo aparecia como um bloco preto cortado.
+- Partilha nas redes: imagem própria para a /devfest («já provaste. agora entra na lista») e texto alternativo nas imagens de partilha.
+- docs/infra: wakenbake.pt no ar.
