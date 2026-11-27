@@ -309,7 +309,7 @@ function emailConfirmacao() {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${preto};">
 <tr><td align="center" style="padding:40px 20px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;">
-<tr><td style="padding-bottom:36px;"><img src="https://wakenbake.pt/img/email-logo.png" width="150" height="115" alt="WAKE N BAKE" style="display:block;border:0;outline:none;width:150px;height:115px;color:${osso};font-family:${display};font-size:28px;letter-spacing:1px;"></td></tr>
+<tr><td style="padding-bottom:36px;"><img src="https://wakenbake.pt/img/email-logo.png" width="140" height="98" alt="WAKE N BAKE" style="display:block;border:0;outline:none;width:140px;height:98px;color:${osso};font-family:${display};font-size:28px;letter-spacing:1px;"></td></tr>
 <tr><td style="font-family:${mono};font-size:12px;letter-spacing:3px;color:${betao};padding-bottom:14px;">LISTA DE ESPERA</td></tr>
 <tr><td style="font-family:${display};font-size:44px;line-height:1;color:${osso};padding-bottom:22px;">FALTA UM CLIQUE.</td></tr>
 <tr><td style="font-family:${mono};font-size:14px;line-height:1.8;color:${osso};padding-bottom:30px;">confirma o teu email e ficas na lista da wake n bake. à quinta de manhã, quando há fornada, sabes antes do instagram.</td></tr>
