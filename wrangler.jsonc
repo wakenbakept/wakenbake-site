@@ -27,7 +27,21 @@
   },
   "kv_namespaces": [
     { "binding": "LISTA_KV", "id": "1ce7b8475e2a458e85c03940ed456530" }
-  ]
+  ],
+  // Pré-visualizações (staging) de cada ramo. Não herdam nada do topo: repete-se o que é preciso.
+  // Aqui nenhum endereço conta como produção, por isso as inscrições vão sempre para a lista «Testes».
+  "previews": {
+    "observability": { "enabled": true },
+    "vars": {
+      "BREVO_REMETENTE": "ola@wakenbake.pt",
+      "BREVO_REMETENTE_NOME": "Wake n Bake",
+      "CONSENTIMENTO_VERSAO": "2026-11-27",
+      "DOMINIOS_PRODUCAO": "wakenbake.pt,www.wakenbake.pt"
+    },
+    "kv_namespaces": [
+      { "binding": "LISTA_KV", "id": "1ce7b8475e2a458e85c03940ed456530" }
+    ]
+  }
   // Domínios (wakenbake.pt e www) ligam-se no painel do Worker depois da aprovação, não aqui,
   // para nenhum deploy pôr o site no domínio por acidente.
 }
