@@ -3,7 +3,7 @@
 // Segredos (só nos Secrets do Worker, nunca no repositório): BREVO_API_KEY, TURNSTILE_SECRET.
 
 const BREVO = 'https://api.brevo.com/v3';
-const CFG_VERSAO = 4; // subir quando mudar o que o setup cria no Brevo
+const CFG_VERSAO = 5; // subir quando mudar o que o setup cria no Brevo
 const NOMES = {
   pasta: 'Wake n Bake',
   lista: 'Lista de espera',
@@ -309,7 +309,7 @@ function emailConfirmacao() {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${preto};">
 <tr><td align="center" style="padding:40px 20px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;">
-<tr><td style="padding-bottom:36px;"><img src="https://wakenbake.pt/img/email-logo.png" width="140" height="98" alt="WAKE N BAKE" style="display:block;border:0;outline:none;width:140px;height:98px;color:${osso};font-family:${display};font-size:28px;letter-spacing:1px;"></td></tr>
+<tr><td style="padding-bottom:36px;"><img src="https://wakenbake.pt/img/email-logo.png?v=2" width="172" height="130" alt="WAKE N BAKE" style="display:block;border:0;outline:none;width:172px;height:130px;color:${osso};font-family:${display};font-size:28px;letter-spacing:1px;"></td></tr>
 <tr><td style="font-family:${mono};font-size:12px;letter-spacing:3px;color:${betao};padding-bottom:14px;">LISTA DE ESPERA</td></tr>
 <tr><td style="font-family:${display};font-size:44px;line-height:1;color:${osso};padding-bottom:22px;">FALTA UM CLIQUE.</td></tr>
 <tr><td style="font-family:${mono};font-size:14px;line-height:1.8;color:${osso};padding-bottom:30px;">confirma o teu email e ficas na lista da wake n bake. à quinta de manhã, quando há fornada, sabes antes do instagram.</td></tr>

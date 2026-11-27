@@ -7,11 +7,18 @@ interface Props {
   descricao: string;
   caminho: string;
   indexar?: boolean;
+  // Imagem de partilha (WhatsApp, LinkedIn, Instagram, X) e o seu texto alternativo.
+  ogImagem?: string;
+  ogAlt?: string;
 }
 
-const { titulo, descricao, caminho, indexar = true } = Astro.props;
+const {
+  titulo, descricao, caminho, indexar = true,
+  ogImagem = '/img/og.png',
+  ogAlt = 'Wake n Bake, massa (mãe) clandestina em Faro: o site está a fermentar. A lista sabe primeiro.',
+} = Astro.props;
 const canonico = new URL(caminho, SITE.base).href;
-const og = new URL('/img/og.png', SITE.base).href;
+const og = new URL(ogImagem, SITE.base).href;
 ---
 <!doctype html>
 <html lang="pt-PT">
@@ -37,6 +44,8 @@ const og = new URL('/img/og.png', SITE.base).href;
     <meta property="og:image" content={og} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogAlt} />
+    <meta name="twitter:image:alt" content={ogAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     {SITE.analytics && (
       <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: SITE.analytics })}></script>
