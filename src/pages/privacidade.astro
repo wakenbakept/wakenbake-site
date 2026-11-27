@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Grao from '../components/Grao.astro';
+import Topo from '../components/Topo.astro';
+import Rodape from '../components/Rodape.astro';
+import { SITE } from '../config.js';
+---
+<Base titulo="Privacidade · Wake n Bake" descricao="Como a Wake n Bake trata os dados da lista de espera." caminho="/privacidade">
+  <Grao />
+  <Topo etiqueta="PRIVACIDADE" />
+  <main class="texto">
+    <p class="etiqueta">ATUALIZADO A 27 DE NOVEMBRO DE 2026</p>
+    <h1>privacidade<span class="ponto" aria-hidden="true"></span></h1>
+    <p class="lead">curto e direto: pedimos o mínimo, usamos só para o que dissemos e sais quando quiseres.</p>
+
+    <h2>QUEM TRATA OS DADOS</h2>
+    <p>A Wake n Bake. Para qualquer assunto sobre os teus dados: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+    <h2>QUE DADOS</h2>
+    <p>Quando entras na lista de espera: o teu email, o teu nome (se o deres), a página onde te inscreveste e a data e versão do consentimento.</p>
+
+    <h2>PARA QUÊ</h2>
+    <p>Para te mandarmos avisos de fornada, novidades da Wake n Bake e o aviso de quando o site abrir. Não vendemos nem cedemos os teus dados a ninguém para publicidade.</p>
+
+    <h2>COM QUE BASE</h2>
+    <p>O teu consentimento (artigo 6.º, n.º 1, alínea a) do RGPD). Só entras na lista depois de confirmares o email. Podes retirar o consentimento a qualquer momento, no link que vem no fim de cada email ou escrevendo-nos.</p>
+
+    <h2>QUEM NOS AJUDA</h2>
+    <p>Usamos serviços externos que tratam os dados por nossa conta e só para isto:</p>
+    <ul>
+      <li><strong>Brevo</strong> (França): gere a lista e envia os emails. Guarda os dados na União Europeia.</li>
+      <li><strong>Cloudflare</strong>: aloja o site, faz a verificação anti-robô do formulário (Turnstile) e guarda a inscrição por pouco tempo (até 30 dias) se o Brevo estiver em baixo.</li>
+      <li><strong>Google</strong> (Gmail): é onde chegam os emails que mandas para {SITE.email}.</li>
+    </ul>
+    <p>A Cloudflare e a Google podem tratar dados fora da União Europeia, com as garantias que o RGPD exige (Quadro de Privacidade de Dados UE-EUA ou cláusulas contratuais-tipo).</p>
+
+    <h2>DURANTE QUANTO TEMPO</h2>
+    <p>Enquanto estiveres na lista. Se saíres, deixas de receber emails e o teu endereço fica apenas marcado como «saiu», para garantir que não voltas a receber nada. Se pedires, apagamos tudo.</p>
+
+    <h2>OS TEUS DIREITOS</h2>
+    <p>Podes pedir acesso, correção, apagamento, limitação, oposição e portabilidade dos teus dados, escrevendo para <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Respondemos no prazo de um mês. Se achares que não tratámos bem os teus dados, podes queixar-te à CNPD (<a href="https://www.cnpd.pt" rel="noopener">cnpd.pt</a>).</p>
+
+    <h2>COOKIES</h2>
+    <p>Este site não usa cookies de publicidade nem de seguimento. O Turnstile da Cloudflare só entra em ação quando usas o formulário, para confirmar que não és um robô.{SITE.analytics && ' Contamos visitas de forma agregada com o Cloudflare Web Analytics, que não usa cookies.'}</p>
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .texto { padding: 48px var(--margem) 72px; max-width: 720px; }
+  .texto .etiqueta { margin: 0 0 18px; font-size: 11px; }
+  h1 { margin: 0 0 22px; font-family: var(--font-display); font-weight: 400; font-size: clamp(52px, 14vw, 84px); line-height: 0.9; color: var(--osso); filter: url(#rough); }
+  .ponto { display: inline-block; width: 0.15em; height: 0.15em; background: currentColor; margin-left: 0.09em; }
+  .lead { font-size: 15px; color: var(--osso); margin: 0 0 36px; }
+  h2 { font-family: var(--font-mono); font-weight: 400; font-size: 12px; letter-spacing: 0.2em; color: var(--betao); margin: 40px 0 10px; padding-top: 18px; border-top: 1px dashed var(--fechado); }
+  p, li { font-size: 14px; line-height: 1.8; color: var(--osso); }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 18px; }
+  li { margin-bottom: 8px; }
+  strong { font-weight: 700; }
+  a { color: var(--osso); text-decoration: underline; text-underline-offset: 3px; }
+</style>

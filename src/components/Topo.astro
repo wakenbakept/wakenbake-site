@@ -1,0 +1,19 @@
+---
+interface Props { etiqueta?: string; }
+const { etiqueta = 'FARO' } = Astro.props;
+---
+<header class="topo">
+  <a href="/" class="topo-logo" aria-label="Wake n Bake, início">
+    <img src="/img/logo-linha.svg" alt="" width="196" height="18" />
+  </a>
+  <span class="etiqueta">{etiqueta}</span>
+</header>
+
+<style>
+  .topo {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 18px var(--margem); border-bottom: 1px solid var(--linha);
+  }
+  .topo-logo img { width: clamp(150px, 40vw, 196px); height: auto; }
+  .topo .etiqueta { font-size: 11px; }
+</style>

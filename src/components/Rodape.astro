@@ -1,0 +1,32 @@
+---
+import { SITE, INSTAGRAM_WEB, INSTAGRAM_ANDROID } from '../config.js';
+const ano = new Date().getFullYear();
+---
+<footer class="rodape" data-ig-android={INSTAGRAM_ANDROID}>
+  <img class="rodape-logo" src="/img/logo-empilhado.svg" alt="Wake n Bake" width="120" height="84" loading="lazy" />
+  <p class="rodape-frase">não temos loja.<br /><span>temos pão e cenas.</span></p>
+  <nav class="rodape-links" aria-label="Contactos">
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    <a href={INSTAGRAM_WEB} data-ig>@{SITE.instagram}</a>
+    <a href="/privacidade">privacidade</a>
+  </nav>
+  <p class="rodape-nota">© {ano} wake n bake · massa (mãe) clandestina · faro</p>
+</footer>
+
+<script>
+  // Links do Instagram: no Android o link «intent» abre a app (e cai no browser se não houver app).
+  // No iPhone o link normal já abre a app quando ela está instalada.
+  const android = document.querySelector<HTMLElement>('[data-ig-android]')?.dataset.igAndroid;
+  if (android && /Android/i.test(navigator.userAgent)) {
+    document.querySelectorAll<HTMLAnchorElement>('a[data-ig]').forEach((a) => { a.href = android; });
+  }
+</script>
+
+<style>
+  .rodape { border-top: 1px solid var(--linha); padding: 56px var(--margem) 40px; display: grid; gap: 22px; }
+  .rodape-logo { width: 120px; height: auto; }
+  .rodape-frase { margin: 0; font-family: var(--font-display); font-size: clamp(32px, 9vw, 52px); line-height: 0.95; color: var(--osso); }
+  .rodape-frase span { color: var(--betao); }
+  .rodape-links { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 13px; }
+  .rodape-nota { margin: 0; font-size: 11px; letter-spacing: 1px; color: var(--fechado); }
+</style>

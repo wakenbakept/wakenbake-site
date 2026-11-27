@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Grao from '../components/Grao.astro';
+import Topo from '../components/Topo.astro';
+import Rodape from '../components/Rodape.astro';
+---
+<Base titulo="Não saiu do forno · Wake n Bake" descricao="Esta página não existe." caminho="/404" indexar={false}>
+  <Grao />
+  <Topo etiqueta="ERRO 404" />
+  <main class="simples">
+    <span class="sticker">ESGOTADO</span>
+    <h1 class="simples-titulo">isto não <span>saiu do forno.</span></h1>
+    <p class="simples-texto">a página que procuras não existe. ou já esgotou.</p>
+    <a class="simples-botao" href="/">VOLTAR AO INÍCIO</a>
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .simples { padding: 56px var(--margem) 72px; max-width: 720px; display: flex; flex-direction: column; align-items: flex-start; gap: 26px; }
+  .simples-titulo { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(52px, 14vw, 88px); line-height: 0.9; color: var(--betao); filter: url(#rough); }
+  .simples-titulo span { color: var(--osso); }
+  .simples-texto { margin: 0; font-size: 14px; line-height: 1.8; color: var(--betao); }
+  .simples-botao { border: 1px solid var(--osso); color: var(--osso); font-family: var(--font-display); font-size: 20px; padding: 14px 26px; }
+  .simples-botao:hover { background: var(--osso); color: var(--preto); }
+</style>

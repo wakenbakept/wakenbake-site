@@ -1,0 +1,14 @@
+# Gerado
+dist/
+.astro/
+node_modules/
+.wrangler/
+
+# Segredos e ficheiros locais: nunca no repositório
+.env
+.env.*
+.dev.vars
+*.local
+segredos*
+
+.DS_Store

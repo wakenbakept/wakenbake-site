@@ -1,0 +1,6 @@
+# wakenbake.pt: alcance máximo em pesquisa e IA. Bloqueia-se só robôs abusivos.
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://wakenbake.pt/sitemap.xml

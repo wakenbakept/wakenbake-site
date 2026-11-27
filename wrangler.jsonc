@@ -1,0 +1,33 @@
+// Configuração do Worker wakenbake-site (Cloudflare, conta da Wake n Bake).
+// Os segredos BREVO_API_KEY e TURNSTILE_SECRET ficam só em Settings → Variables and Secrets do Worker.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "wakenbake-site",
+  "main": "src/worker/index.js",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash",
+    // O Worker corre antes dos ficheiros: trata de /api, do www e do noindex fora de produção.
+    "run_worker_first": true
+  },
+  // Endereço público workers.dev desligado até à publicação aprovada. As pré-visualizações por ramo continuam.
+  "workers_dev": false,
+  "preview_urls": true,
+  "observability": { "enabled": true },
+  "triggers": { "crons": ["*/30 * * * *"] },
+  "vars": {
+    "BREVO_REMETENTE": "ola@wakenbake.pt",
+    "BREVO_REMETENTE_NOME": "Wake n Bake",
+    "CONSENTIMENTO_VERSAO": "2026-11-27",
+    // Só estes endereços inscrevem na lista real. Pré-visualizações vão para a lista «Testes».
+    "DOMINIOS_PRODUCAO": "wakenbake.pt,www.wakenbake.pt,wakenbake-site.wakenbake-padaria.workers.dev"
+  },
+  "kv_namespaces": [
+    { "binding": "LISTA_KV", "id": "1ce7b8475e2a458e85c03940ed456530" }
+  ]
+  // Domínios (wakenbake.pt e www) ligam-se no painel do Worker depois da aprovação, não aqui,
+  // para nenhum deploy pôr o site no domínio por acidente.
+}
