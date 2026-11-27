@@ -54,6 +54,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: var(--betao); text-decoration: none; }
+/* Títulos sem palavras soltas na última linha (ex.: «agora entra na / lista»). */
+h1, h2, h3 { text-wrap: balance; }
 a:hover { color: var(--osso); }
 :focus-visible { outline: 2px solid var(--osso); outline-offset: 3px; }
 ::selection { background: var(--betao); color: var(--preto); }

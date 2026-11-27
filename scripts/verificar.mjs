@@ -26,6 +26,10 @@ for (const p of html) {
   if (!semIndexar.has(nome) && noindex) erro(`${nome}: não devia ter noindex`);
   for (const m of s.matchAll(/<script\b([^>]*)>/g)) if (!/\bsrc=/.test(m[1])) erro(`${nome}: script embutido (a CSP bloqueia)`);
   if (/—/.test(s)) erro(`${nome}: tem travessão (—)`);
+  // Imagens e ficheiros do próprio site que a página pede (src, og:image, ícones) têm de existir.
+  for (const m of s.matchAll(/(?:src|content|href)="(?:https:\/\/wakenbake\.pt)?(\/[^"#?]*\.(?:png|svg|jpg|webp|ico|woff2))"/g)) {
+    if (!existsSync(join(DIST, m[1]))) erro(`${nome}: ficheiro em falta ${m[1]}`);
+  }
   for (const m of s.matchAll(/href="(\/[^"#?]*)/g)) {
     const alvo = m[1];
     const candidatos = [alvo, `${alvo}.html`, join(alvo, 'index.html')].map((c) => join(DIST, c));
