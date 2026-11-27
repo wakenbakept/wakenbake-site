@@ -12,7 +12,7 @@ const NOMES = {
 };
 const PENDENTE_TTL = 60 * 60 * 24 * 30; // 30 dias
 const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
-const NOME_RE = /^[\p{L}\p{M}' .-]{1,60}$/u;
+const NOME_RE = /^[\p{L}\p{M}' .-]{2,40}$/u;
 
 export default {
   async fetch(request, env, ctx) {
@@ -73,7 +73,7 @@ async function lista(request, env, ctx, url) {
   const pagina = String(d.pagina || '').slice(0, 60).replace(/[^a-z0-9/_-]/gi, '');
 
   if (!EMAIL_RE.test(email) || email.length > 120) return json({ ok: false, erro: 'dados' }, 400);
-  if (nome && !NOME_RE.test(nome)) return json({ ok: false, erro: 'dados' }, 400);
+  if (nome.length < 2 || !NOME_RE.test(nome)) return json({ ok: false, erro: 'nome' }, 400);
   if (d.consentimento !== true) return json({ ok: false, erro: 'consentimento' }, 400);
 
   const ip = request.headers.get('CF-Connecting-IP') || '';
@@ -156,7 +156,7 @@ async function enviarBrevo(env, ins) {
     CONSENTIMENTO_VERSAO: ins.consentimento,
     CONSENTIMENTO_DATA: ins.data.slice(0, 10),
   };
-  if (ins.nome) atributos[cfg.nomeAtributo] = ins.nome;
+  atributos[cfg.nomeAtributo] = ins.nome;
   await brevo(env, '/contacts/doubleOptinConfirmation', {
     method: 'POST',
     body: JSON.stringify({

@@ -3,14 +3,36 @@ import { SITE, INSTAGRAM_WEB, INSTAGRAM_ANDROID } from '../config.js';
 const ano = new Date().getFullYear();
 ---
 <footer class="rodape" data-ig-android={INSTAGRAM_ANDROID}>
-  <img class="rodape-logo" src="/img/logo-empilhado.svg" alt="Wake n Bake" width="120" height="84" />
-  <p class="rodape-frase">não temos loja.<br /><span>temos pão e cenas.</span></p>
-  <nav class="rodape-links" aria-label="Contactos">
-    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-    <a href={INSTAGRAM_WEB} data-ig>@{SITE.instagram}</a>
+  <div class="rodape-grelha">
+    <div class="rodape-marca">
+      <img class="rodape-logo" src="/img/logo-original.svg" alt="Wake n Bake" width="2294" height="1750" />
+      <p class="etiqueta">MASSA (MÃE) CLANDESTINA · FARO</p>
+    </div>
+
+    <div class="rodape-coluna">
+      <h2 class="rodape-titulo">A SEMANA</h2>
+      <dl>
+        <div><dt>ANÚNCIO</dt><dd>quinta, no instagram</dd></div>
+        <div><dt>ENCOMENDAS</dt><dd>até sexta, por DM</dd></div>
+        <div><dt>RECOLHA</dt><dd>sáb e dom, 12:00 às 13:00</dd></div>
+        <div><dt>ONDE</dt><dd>perto do liceu, em faro</dd></div>
+      </dl>
+    </div>
+
+    <div class="rodape-coluna">
+      <h2 class="rodape-titulo">CONTACTOS</h2>
+      <ul>
+        <li><a href={INSTAGRAM_WEB} data-ig rel="noopener">@{SITE.instagram}</a></li>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rodape-base">
     <a href="/privacidade">privacidade</a>
-  </nav>
-  <p class="rodape-nota">© {ano} wake n bake · massa (mãe) clandestina · faro</p>
+    <span>não temos loja. temos pão e cenas.</span>
+    <span>© {ano} wake n bake</span>
+  </div>
 </footer>
 
 <script>
@@ -23,10 +45,36 @@ const ano = new Date().getFullYear();
 </script>
 
 <style>
-  .rodape { border-top: 1px solid var(--linha); padding: 56px var(--margem) 40px; display: grid; gap: 22px; }
-  .rodape-logo { width: 120px; height: auto; }
-  .rodape-frase { margin: 0; font-family: var(--font-display); font-size: clamp(32px, 9vw, 52px); line-height: 0.95; color: var(--osso); }
-  .rodape-frase span { color: var(--betao); }
-  .rodape-links { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 13px; }
-  .rodape-nota { margin: 0; font-size: 11px; letter-spacing: 1px; color: var(--fechado); }
+  .rodape { border-top: 1px solid var(--linha); padding: 56px var(--margem) 0; }
+  .rodape-grelha { display: grid; gap: 44px; max-width: 1180px; margin: 0 auto; padding-bottom: 48px; }
+  @media (min-width: 900px) {
+    .rodape-grelha { grid-template-columns: 1.2fr 1fr 1fr; align-items: start; gap: 56px; }
+  }
+
+  /* Logo original com a margem de proteção do próprio ficheiro: nada encostado a ele. */
+  .rodape-marca { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+  .rodape-logo { width: clamp(190px, 56vw, 250px); height: auto; }
+  .rodape-marca .etiqueta { margin: 0; font-size: 10px; letter-spacing: 3px; }
+  @media (min-width: 900px) {
+    .rodape-marca { justify-self: start; }
+  }
+
+  .rodape-titulo {
+    margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--linha);
+    font-family: var(--font-mono); font-weight: 400; font-size: 11px; letter-spacing: 3px; color: var(--betao);
+  }
+  .rodape-coluna dl, .rodape-coluna ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; }
+  .rodape-coluna dl div { display: flex; gap: 12px; }
+  .rodape-coluna dt { flex: 0 0 92px; font-size: 10px; letter-spacing: 1px; color: var(--betao); padding-top: 2px; }
+  .rodape-coluna dd { margin: 0; color: var(--osso); }
+  .rodape-coluna a { color: var(--osso); }
+  .rodape-coluna a:hover { color: var(--betao); }
+
+  .rodape-base {
+    max-width: 1180px; margin: 0 auto; border-top: 1px solid var(--linha); padding: 22px 0 28px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 28px;
+    font-size: 11px; letter-spacing: 1px; color: var(--betao);
+  }
+  .rodape-base a { color: var(--betao); text-decoration: underline; text-underline-offset: 3px; }
+  .rodape-base a:hover { color: var(--osso); }
 </style>

@@ -19,8 +19,8 @@ STATUS ......... <span>A FERMENTAR</span></pre>
 
   <form class="lista" data-lista data-origem={origem} data-sitekey={SITE.turnstile} novalidate>
     <div class="campo">
-      <label for="lista-nome">NOME <span>(OPCIONAL)</span></label>
-      <input id="lista-nome" name="nome" type="text" autocomplete="given-name" maxlength="60" />
+      <label for="lista-nome">NOME</label>
+      <input id="lista-nome" name="nome" type="text" autocomplete="given-name" autocapitalize="words" maxlength="40" required />
     </div>
     <div class="campo">
       <label for="lista-email">EMAIL</label>
@@ -99,6 +99,7 @@ STATUS ......... <span>A FERMENTAR</span></pre>
     });
 
     const ERROS: Record<string, string> = {
+      nome: 'falta o teu nome. só o primeiro chega.',
       dados: 'esse email não parece bem. confirma e tenta outra vez.',
       consentimento: 'falta marcares a caixa para entrares na lista.',
       'anti-spam': 'a verificação anti-robô falhou. espera uns segundos e tenta outra vez.',
@@ -109,7 +110,9 @@ STATUS ......... <span>A FERMENTAR</span></pre>
       e.preventDefault();
       aviso.textContent = '';
       const dados = new FormData(form);
+      const nome = String(dados.get('nome') || '').trim();
       const email = String(dados.get('email') || '').trim();
+      if (nome.length < 2) { aviso.textContent = ERROS.nome; form.nome.focus(); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { aviso.textContent = ERROS.dados; form.email.focus(); return; }
       if (!dados.get('consentimento')) { aviso.textContent = ERROS.consentimento; return; }
 
@@ -121,7 +124,7 @@ STATUS ......... <span>A FERMENTAR</span></pre>
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({
-            nome: String(dados.get('nome') || '').trim(),
+            nome,
             email,
             consentimento: true,
             origem: form.dataset.origem,
