@@ -3,6 +3,8 @@ export const SITE = {
   base: 'https://wakenbake.pt',
   nome: 'Wake n Bake',
   email: 'ola@wakenbake.pt',
+  // Responsável pelo tratamento de dados, como aparece na página de privacidade (RGPD, art. 13.º). Decisão do António.
+  responsavel: 'a Wake n Bake',
   instagram: 'wakenbakept',
   // Chave pública do widget Turnstile «Lista de espera wakenbake.pt». O segredo fica só nos Secrets do Worker.
   turnstile: '0x4AAAAAAGVOJ_UZpwCLGUgn',
