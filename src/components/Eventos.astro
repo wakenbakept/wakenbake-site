@@ -1,0 +1,50 @@
+---
+// Eventos e quantidades grandes (B2B). Frase canónica da marca: «quantidades grandes, fora de horas? também se arranja. é falar.»
+import { SITE, INSTAGRAM_WEB } from '../config.js';
+interface Props { num: string; devfest?: boolean; }
+const { num, devfest = false } = Astro.props;
+const assunto = encodeURIComponent(devfest ? 'Evento (vim do DevFest)' : 'Evento ou quantidade grande');
+---
+<section class="evt" id="eventos" aria-labelledby="evt-titulo">
+  <div class="evt-texto">
+    <p class="etiqueta">{num} · EVENTOS E QUANTIDADES</p>
+    <h2 id="evt-titulo" class="evt-titulo">quantidades grandes, fora de horas?<br /><span>também se arranja. é falar.</span></h2>
+    {devfest
+      ? <p class="evt-lead">o coffee break do devfest foi nosso.<br />o do teu evento pode ser o próximo.</p>
+      : <p class="evt-lead">coffee breaks, eventos, equipas.<br />pão e cenas na quantidade certa.</p>}
+  </div>
+
+  <div class="evt-cartao">
+    <pre class="evt-dados" aria-label="O que fazemos">O QUE SAI ...... PÃO, SANDES, FOCACCIA
+PARA ........... EVENTOS, EQUIPAS, ENCONTROS
+PRAZO .......... <span>COM TEMPO. SÃO 24 HORAS</span></pre>
+    <a class="evt-botao" href={`mailto:${SITE.email}?subject=${assunto}`}>FALAR SOBRE UM EVENTO</a>
+    <a class="evt-ig" href={INSTAGRAM_WEB} data-ig rel="noopener"><span>OU POR DM · @{SITE.instagram.toUpperCase()}</span><span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .evt {
+    display: grid; gap: 30px; padding: 64px var(--margem); max-width: 1180px; margin: 0 auto;
+    border-top: 1px solid var(--linha);
+  }
+  @media (min-width: 900px) { .evt { grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 56px; } }
+  .evt .etiqueta { margin: 0 0 16px; font-size: 11px; letter-spacing: 3px; }
+  .evt-titulo { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(38px, 10.4vw, 58px); line-height: 0.95; color: var(--osso); filter: url(#rough); }
+  .evt-titulo span { color: var(--betao); }
+  .evt-lead { margin: 22px 0 0; font-size: 14px; line-height: 1.8; color: var(--betao); }
+
+  .evt-cartao { border: 1px solid var(--linha); padding: 22px clamp(18px, 4vw, 28px) 24px; display: flex; flex-direction: column; gap: 14px; }
+  .evt-dados {
+    margin: 0 0 6px; font-family: var(--font-mono); font-size: clamp(10px, 2.7vw, 12px); line-height: 2.1; color: var(--osso);
+    white-space: pre; overflow-x: auto; border-bottom: 1px dashed var(--fechado); padding-bottom: 14px;
+  }
+  .evt-dados span { color: var(--betao); }
+  .evt-botao {
+    display: block; text-align: center; background: var(--osso); color: var(--preto); border: 1px solid var(--osso);
+    font-family: var(--font-display); font-size: 19px; letter-spacing: 0.5px; padding: 15px 18px;
+  }
+  .evt-botao:hover { background: var(--preto); color: var(--osso); }
+  .evt-ig { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; letter-spacing: 2px; color: var(--betao); padding: 4px 2px; }
+  .evt-ig:hover { color: var(--osso); }
+</style>

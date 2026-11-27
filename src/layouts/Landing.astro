@@ -8,6 +8,7 @@ import Lista from '../components/Lista.astro';
 import Ticker from '../components/Ticker.astro';
 import Inventario from '../components/Inventario.astro';
 import Orienta from '../components/Orienta.astro';
+import Eventos from '../components/Eventos.astro';
 import Rodape from '../components/Rodape.astro';
 
 interface Props {
@@ -44,8 +45,19 @@ const p = Astro.props;
       </div>
     </section>
     <Ticker />
-    <Inventario />
-    <Orienta />
+    {p.origem === 'devfest' ? (
+      <>
+        <Eventos num="01" devfest />
+        <Inventario num="02" />
+        <Orienta num="03" />
+      </>
+    ) : (
+      <>
+        <Inventario num="01" />
+        <Eventos num="02" />
+        <Orienta num="03" />
+      </>
+    )}
   </main>
   <Rodape />
 </Base>

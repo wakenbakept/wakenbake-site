@@ -1,5 +1,7 @@
 ---
 import { SITE, INSTAGRAM_WEB } from '../config.js';
+interface Props { num: string; }
+const { num } = Astro.props;
 const passos = [
   'à quinta abrem as encomendas da fornada, nos stories do instagram',
   'encomendas até sexta, por DM no instagram',
@@ -8,12 +10,11 @@ const passos = [
 ];
 ---
 <section class="ori" id="orienta" aria-labelledby="ori-titulo">
-  <p class="etiqueta">02 · ORIENTA-TE</p>
+  <p class="etiqueta">{num} · ORIENTA-TE</p>
   <h2 id="ori-titulo" class="ori-titulo">não temos loja.<br /><span>temos código.</span></h2>
   <ol class="ori-passos">
     {passos.map((p, i) => (<li><span class="ori-num">{String(i + 1).padStart(2, '0')}</span><span>{p}</span></li>))}
   </ol>
-  <p class="ori-extra">quantidades grandes, fora de horas? <span>também se arranja. é uma questão de falarmos.</span></p>
   <a class="ori-ig" href={INSTAGRAM_WEB} data-ig rel="noopener">
     <span><span class="ori-ig-1">INSTAGRAM · DM</span><span class="ori-ig-2">@{SITE.instagram}</span></span>
     <span aria-hidden="true">→</span>
@@ -26,11 +27,9 @@ const passos = [
   .ori .etiqueta { margin: 0 0 16px; font-size: 11px; letter-spacing: 3px; }
   .ori-titulo { margin: 0 0 30px; font-family: var(--font-display); font-weight: 400; font-size: clamp(44px, 12vw, 64px); line-height: 0.92; color: var(--osso); filter: url(#rough); }
   .ori-titulo span { color: var(--betao); }
-  .ori-passos { list-style: none; margin: 0; padding: 0; max-width: 560px; }
+  .ori-passos { list-style: none; margin: 0 0 28px; padding: 0; max-width: 560px; }
   .ori-passos li { display: grid; grid-template-columns: 38px 1fr; gap: 10px; padding: 14px 0; border-bottom: 1px dashed var(--fechado); font-size: 14px; line-height: 1.7; color: var(--osso); }
   .ori-num { font-weight: 700; color: var(--betao); }
-  .ori-extra { margin: 24px 0 28px; max-width: 560px; font-size: 13px; line-height: 1.8; color: var(--osso); }
-  .ori-extra span { color: var(--betao); }
   .ori-ig { display: flex; justify-content: space-between; align-items: center; gap: 16px; max-width: 560px; border: 1px solid var(--osso); color: var(--osso); padding: 16px 20px; }
   .ori-ig:hover { background: var(--osso); color: var(--preto); }
   .ori-ig > span:first-child { display: flex; flex-direction: column; gap: 4px; }

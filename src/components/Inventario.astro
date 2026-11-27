@@ -1,5 +1,7 @@
 ---
 // Inventário sem preços (fase 0). Fotos do pão nunca: só tipo e forma.
+interface Props { num: string; }
+const { num } = Astro.props;
 const produtos = [
   { nome: 'PÃO DE TRIGO', desc: 'massa-mãe · côdea grossa, miolo aberto', formatos: ['GRANDE', 'BLOCO'] },
   { nome: 'PÃO DE TRIGO INTEGRAL', desc: 'massa-mãe · denso e fundo', formatos: ['GRANDE', 'BLOCO'] },
@@ -10,7 +12,7 @@ const produtos = [
 <section class="inv" id="inventario" aria-labelledby="inv-titulo">
   <div class="inv-topo">
     <div>
-      <p class="etiqueta">01 · INVENTÁRIO</p>
+      <p class="etiqueta">{num} · INVENTÁRIO</p>
       <h2 id="inv-titulo" class="inv-titulo">PRODUTOS</h2>
     </div>
     <p class="inv-nota">lotes contados.<br />quando esgotar, está esgotado.</p>
