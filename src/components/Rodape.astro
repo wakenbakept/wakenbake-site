@@ -2,7 +2,7 @@
 import { SITE, INSTAGRAM_WEB, INSTAGRAM_ANDROID } from '../config.js';
 const ano = new Date().getFullYear();
 ---
-<footer class="rodape" data-ig-android={INSTAGRAM_ANDROID}>
+<footer class="rodape" data-ig-android={INSTAGRAM_ANDROID} data-ig-user={SITE.instagram}>
   <div class="rodape-grelha">
     <div class="rodape-marca">
       <img class="rodape-logo" src="/img/logo-original.svg" alt="Wake n Bake" width="2294" height="1750" />
@@ -36,11 +36,36 @@ const ano = new Date().getFullYear();
 </footer>
 
 <script>
-  // Links do Instagram: no Android o link «intent» abre a app (e cai no browser se não houver app).
-  // No iPhone o link normal já abre a app quando ela está instalada.
-  const android = document.querySelector<HTMLElement>('[data-ig-android]')?.dataset.igAndroid;
-  if (android && /Android/i.test(navigator.userAgent)) {
-    document.querySelectorAll<HTMLAnchorElement>('a[data-ig]').forEach((a) => { a.href = android; });
+  // Links do Instagram.
+  // Android: o link «intent» abre a app no perfil (e cai no browser se não houver app).
+  // iPhone: o link normal abre a app mas, por um erro do Instagram, às vezes cai no feed.
+  // Por isso no iPhone vamos direto ao perfil com instagram://user e, se a app não abrir,
+  // seguimos para o perfil na web.
+  const rodape = document.querySelector<HTMLElement>('[data-ig-android]');
+  const android = rodape?.dataset.igAndroid;
+  const utilizador = rodape?.dataset.igUser;
+  const ua = navigator.userAgent;
+  const iphone = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const links = document.querySelectorAll<HTMLAnchorElement>('a[data-ig]');
+
+  if (android && /Android/i.test(ua)) {
+    links.forEach((a) => { a.href = android; });
+  } else if (iphone && utilizador) {
+    links.forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const web = a.href;
+        let saiu = false;
+        const marcar = () => { saiu = true; };
+        document.addEventListener('visibilitychange', marcar, { once: true });
+        window.addEventListener('pagehide', marcar, { once: true });
+        window.addEventListener('blur', marcar, { once: true });
+        window.location.href = `instagram://user?username=${utilizador}`;
+        window.setTimeout(() => {
+          if (!saiu && !document.hidden) window.location.href = web;
+        }, 1800);
+      });
+    });
   }
 </script>
 
