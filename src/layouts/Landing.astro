@@ -6,7 +6,8 @@ import Topo from '../components/Topo.astro';
 import Mae from '../components/Mae.astro';
 import Lista from '../components/Lista.astro';
 import Ticker from '../components/Ticker.astro';
-import Instagram from '../components/Instagram.astro';
+import Inventario from '../components/Inventario.astro';
+import Orienta from '../components/Orienta.astro';
 import Rodape from '../components/Rodape.astro';
 
 interface Props {
@@ -43,9 +44,8 @@ const p = Astro.props;
       </div>
     </section>
     <Ticker />
-    <section class="bloco-ig">
-      <Instagram />
-    </section>
+    <Inventario />
+    <Orienta />
   </main>
   <Rodape />
 </Base>
@@ -74,5 +74,4 @@ const p = Astro.props;
 
   .entrada-intro { margin: 0; max-width: 440px; font-size: 14px; line-height: 1.8; color: var(--betao); }
 
-  .bloco-ig { padding: 56px var(--margem); max-width: 720px; }
 </style>
