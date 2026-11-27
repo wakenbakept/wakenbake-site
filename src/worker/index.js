@@ -3,7 +3,7 @@
 // Segredos (só nos Secrets do Worker, nunca no repositório): BREVO_API_KEY, TURNSTILE_SECRET.
 
 const BREVO = 'https://api.brevo.com/v3';
-const CFG_VERSAO = 2; // subir quando mudar o que o setup cria no Brevo
+const CFG_VERSAO = 3; // subir quando mudar o que o setup cria no Brevo
 const NOMES = {
   pasta: 'Wake n Bake',
   lista: 'Lista de espera',
@@ -312,7 +312,7 @@ function emailConfirmacao() {
 <tr><td style="padding-bottom:36px;"><img src="https://wakenbake.pt/img/email-logo.png" width="180" alt="WAKE N BAKE" style="display:block;border:0;width:180px;height:auto;color:${osso};font-family:${display};font-size:28px;"></td></tr>
 <tr><td style="font-family:${mono};font-size:12px;letter-spacing:3px;color:${betao};padding-bottom:14px;">LISTA DE ESPERA</td></tr>
 <tr><td style="font-family:${display};font-size:44px;line-height:1;color:${osso};padding-bottom:22px;">FALTA UM CLIQUE.</td></tr>
-<tr><td style="font-family:${mono};font-size:14px;line-height:1.8;color:${osso};padding-bottom:30px;">confirma o teu email e ficas na lista da wake n bake. avisamos quando há fornada e quando o site abre.</td></tr>
+<tr><td style="font-family:${mono};font-size:14px;line-height:1.8;color:${osso};padding-bottom:30px;">confirma o teu email e ficas na lista da wake n bake. à quinta de manhã, quando há fornada, sabes antes do instagram.</td></tr>
 <tr><td style="padding-bottom:30px;"><a href="{{ doubleoptin }}" style="display:inline-block;background:${osso};color:${preto};font-family:${display};font-size:20px;letter-spacing:1px;text-decoration:none;padding:16px 34px;">CONFIRMAR</a></td></tr>
 <tr><td style="font-family:${mono};font-size:12px;line-height:1.8;color:${betao};border-top:1px dashed #4A4A4A;padding-top:22px;">não foste tu? ignora este email. sem confirmação não entras na lista.<br>massa (mãe) clandestina · faro · <a href="https://wakenbake.pt/privacidade" style="color:${betao};">privacidade</a></td></tr>
 </table></td></tr></table></body></html>`;

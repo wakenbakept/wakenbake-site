@@ -11,10 +11,11 @@ const { origem } = Astro.props;
   </div>
 
   <p class="cartao-grande" aria-hidden="true">SABES<br /><span>PRIMEIRO.</span></p>
+  <p class="cartao-sub">à quinta de manhã, quando há fornada, a lista recebe o aviso por email. o instagram vem depois.</p>
 
   <pre class="cartao-dados" aria-label="Como funciona">INGREDIENTES ... FARINHA · ÁGUA · SAL
 FORNADAS ....... SÁB · DOM
-ANÚNCIO ........ À QUINTA, NO IG
+ACESSO ......... ANTES DO INSTAGRAM
 STATUS ......... <span>A FERMENTAR</span></pre>
 
   <form class="lista" data-lista data-origem={origem} data-sitekey={SITE.turnstile} novalidate>
@@ -43,6 +44,7 @@ STATUS ......... <span>A FERMENTAR</span></pre>
   <div class="feito" data-feito hidden tabindex="-1">
     <span class="sticker">ESTÁS DENTRO</span>
     <p>falta um passo: abre o email que te mandámos e carrega em confirmar. sem isso, não ficas na lista.</p>
+    <p>depois disso, na próxima fornada sabes antes de toda a gente.</p>
     <p class="nota">não chegou? vê no spam ou nas promoções.</p>
   </div>
 </section>
@@ -163,6 +165,7 @@ STATUS ......... <span>A FERMENTAR</span></pre>
   .cartao-topo .etiqueta { margin: 0; font-weight: 400; font-size: 11px; letter-spacing: 2px; }
   .cartao-grande { font-family: var(--font-display); font-size: clamp(40px, 11vw, 52px); line-height: 0.95; margin: 18px 0 6px; color: var(--osso); }
   .cartao-grande span { color: var(--betao); }
+  .cartao-sub { margin: 10px 0 0; font-size: 12px; line-height: 1.7; color: var(--betao); }
   .cartao-dados {
     font-family: var(--font-mono); font-size: clamp(10px, 2.9vw, 12px); line-height: 2.1; color: var(--osso);
     border-top: 1px dashed var(--fechado); margin: 14px 0 0; padding-top: 12px; white-space: pre; overflow-x: auto;
