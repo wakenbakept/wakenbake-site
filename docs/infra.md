@@ -23,4 +23,8 @@
 AI Crawl Control da zona: nenhum robô bloqueado (27/11/2026). «Bot Preference Sync» ligado: depois de publicar, confirmar que o robots.txt servido não acrescenta sinais a recusar treino.
 
 ## Cookies e medição
-Sem cookies de publicidade nem de estatística, por isso sem aviso de cookies (ao contrário do Cuidar dos Meus, que usa GA4, Ads e Clarity com Consent Mode). O Turnstile só carrega quando a pessoa mexe no formulário. Se um dia entrar GA4 ou pixel da Meta, copiar o aviso de cookies do Cuidar dos Meus (recusado por defeito).
+Sem cookies de publicidade nem de estatística, por isso sem aviso de cookies (ao contrário do Cuidar dos Meus, que usa GA4, Ads e Clarity com Consent Mode).
+
+Medição: Cloudflare Web Analytics (conta Cloudflare > Analytics > Web analytics > wakenbake.pt), ativado a 27/11/2026 em «Enable» (injeção automática, inclui visitantes da UE). Não usa cookies nem localStorage. A Cloudflare só injeta o script nas páginas servidas em wakenbake.pt, por isso o staging não conta e não há token no repositório (`SITE.estatistica` em `src/config.js` só liga o texto da privacidade). O CSP já permite `static.cloudflareinsights.com` e o envio para `/cdn-cgi/rum` (connect-src 'self'). Plano B, se a injeção não acontecer nas respostas do Worker: mudar para «Enable with JS Snippet installation» e pôr o token público em `SITE.analytics`.
+
+Leitura: as visitas à /devfest são praticamente leituras do QR (a página não está no Google). No Brevo, o atributo ORIGEM separa inscrições devfest e site. O Turnstile só carrega quando a pessoa mexe no formulário. Se um dia entrar GA4 ou pixel da Meta, copiar o aviso de cookies do Cuidar dos Meus (recusado por defeito).

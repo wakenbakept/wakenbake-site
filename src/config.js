@@ -8,7 +8,11 @@ export const SITE = {
   instagram: 'wakenbakept',
   // Chave pública do widget Turnstile «Lista de espera wakenbake.pt». O segredo fica só nos Secrets do Worker.
   turnstile: '0x4AAAAAAGVOJ_UZpwCLGUgn',
-  // Token público do Cloudflare Web Analytics (sem cookies). Vazio = sem medição.
+  // Estatística sem cookies: Cloudflare Web Analytics em modo automático (ativado a 27/11/2026).
+  // A Cloudflare põe o script nas páginas servidas em wakenbake.pt; o staging não conta. Sem token no repositório.
+  estatistica: true,
+  // Só para o modo manual do Web Analytics (token público). Vazio enquanto o modo for automático,
+  // para não contar as visitas a dobrar.
   analytics: '',
   lote: '068',
 };
