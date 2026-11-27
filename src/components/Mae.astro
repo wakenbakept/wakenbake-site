@@ -1,0 +1,85 @@
+---
+// «A mãe»: o frasco da massa-mãe, personagem do reel «a mãe» (look dev, Claude Design).
+// Vidro em linha osso, massa osso plana com bolhas em anel preto, elástico betão no nível de partida,
+// fita «MÃE» em Space Mono bold. Sem cara: vive pelo volume da massa.
+// A massa sobe, faz o topo e desce em ciclo. Com a classe .cheia (inscrição feita) sobe ao topo e fica.
+---
+<figure class="mae-fig">
+  <svg class="mae" data-mae viewBox="20 30 200 340" role="img" aria-labelledby="mae-titulo">
+    <title id="mae-titulo">A mãe: frasco de massa-mãe a fermentar</title>
+    <defs>
+      <clipPath id="mae-dentro">
+        <path d="M44 92 L196 92 L196 344 Q196 356 184 356 L56 356 Q44 356 44 344 Z"></path>
+      </clipPath>
+    </defs>
+    <g clip-path="url(#mae-dentro)">
+      <g class="mae-massa">
+        <path d="M44 28 Q120 0 196 28 L196 420 L44 420 Z" fill="#F4F2ED"></path>
+        <g class="mae-bolhas" fill="none" stroke="#0A0A0A" stroke-width="2.5">
+          <circle cx="80" cy="56" r="6"></circle>
+          <circle cx="140" cy="40" r="4"></circle>
+          <circle cx="112" cy="84" r="8"></circle>
+          <circle cx="172" cy="74" r="5"></circle>
+          <circle cx="98" cy="30" r="3"></circle>
+          <circle cx="182" cy="44" r="3"></circle>
+          <circle cx="66" cy="128" r="4"></circle>
+          <circle cx="150" cy="118" r="7"></circle>
+          <circle cx="94" cy="170" r="5"></circle>
+          <circle cx="176" cy="160" r="3"></circle>
+        </g>
+      </g>
+    </g>
+    <rect x="34" y="266" width="172" height="9" rx="2" fill="#9A958C"></rect>
+    <g transform="rotate(-2 120 311)">
+      <rect x="76" y="298" width="88" height="26" fill="#F4F2ED" stroke="#0A0A0A" stroke-width="2.5"></rect>
+      <text x="120" y="317" text-anchor="middle" font-family="Space Mono, monospace" font-weight="700" font-size="15" letter-spacing="3" fill="#0A0A0A">MÃE</text>
+    </g>
+    <path d="M62 64 L62 82 Q40 90 40 116 L40 344 Q40 360 56 360 L184 360 Q200 360 200 344 L200 116 Q200 90 178 82 L178 64" fill="none" stroke="#F4F2ED" stroke-width="3" stroke-linejoin="round"></path>
+    <rect x="50" y="124" width="5" height="120" fill="#F4F2ED" opacity="0.14"></rect>
+    <g class="mae-tampa">
+      <rect x="54" y="40" width="132" height="26" rx="3" fill="#F4F2ED"></rect>
+      <path d="M60 49 H180 M60 57 H180" stroke="#0A0A0A" stroke-width="2"></path>
+    </g>
+  </svg>
+  <figcaption class="mae-legenda">
+    <span class="etiqueta">A MÃE</span>
+    <span class="mae-frase">sobe, faz o topo, desce.<br />usa-se na descida.</span>
+  </figcaption>
+</figure>
+
+<style>
+  .mae-fig { margin: 0; display: flex; align-items: center; gap: 18px; }
+  .mae { width: clamp(92px, 24vw, 150px); height: auto; flex-shrink: 0; overflow: visible; }
+  .mae-legenda { display: flex; flex-direction: column; gap: 6px; }
+  .mae-frase { font-size: 13px; line-height: 1.7; color: var(--betao); }
+
+  .mae-massa { transform: translateY(254px); animation: mae-ciclo 12s ease-in-out infinite; }
+  .mae-bolhas circle { transform-box: fill-box; transform-origin: center; animation: mae-respira 2.6s ease-in-out infinite; }
+  .mae-bolhas circle:nth-child(2n) { animation-delay: -0.9s; }
+  .mae-bolhas circle:nth-child(3n) { animation-delay: -1.7s; }
+  .mae-tampa { transform-box: fill-box; transform-origin: center bottom; }
+
+  /* Dormente rente ao elástico, acorda, faz o topo, desce. */
+  @keyframes mae-ciclo {
+    0%, 8% { transform: translateY(254px); }
+    48% { transform: translateY(134px); }
+    62% { transform: translateY(122px); }
+    100% { transform: translateY(254px); }
+  }
+  @keyframes mae-respira {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.55); }
+  }
+
+  /* Inscrição feita: enche o gargalo e empurra a tampa. */
+  .mae.cheia .mae-massa { animation: mae-enche 1.8s cubic-bezier(.3,.7,.2,1) forwards; }
+  .mae.cheia .mae-tampa { animation: mae-empurra 0.5s ease-in-out 1.3s 3; }
+  @keyframes mae-enche { to { transform: translateY(70px); } }
+  @keyframes mae-empurra { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px) rotate(-1.5deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mae-massa { animation: none; transform: translateY(186px); }
+    .mae.cheia .mae-massa { animation: none; transform: translateY(70px); }
+    .mae-bolhas circle, .mae.cheia .mae-tampa { animation: none; }
+  }
+</style>

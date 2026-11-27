@@ -1,0 +1,20 @@
+---
+import Landing from '../layouts/Landing.astro';
+import { SITE } from '../config.js';
+---
+<Landing
+  titulo="Wake n Bake no DevFest · entra na lista"
+  descricao="O coffee break do DevFest foi da Wake n Bake. Pão de massa-mãe e focaccia feitos em Faro. Entra na lista de espera."
+  caminho="/devfest"
+  indexar={false}
+  origem="devfest"
+  etiqueta="DEVFEST 2026"
+  etiquetaLink={SITE.devfest}
+  etiquetaLinkNome="DevFest 2026 do GDG Faro"
+  sticker="DEVFEST"
+  linha1="já provaste"
+  linha2="agora entra na"
+  destaque="lista"
+>
+  <Fragment slot="intro">o coffee break foi nosso. pão e focaccia de uma mini padaria num prédio em faro.<br />lotes contados. quem está na lista sabe da fornada antes do instagram.</Fragment>
+</Landing>

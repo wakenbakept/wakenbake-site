@@ -1,0 +1,96 @@
+---
+// Página de entrada com lista de espera: usada em / («em breve») e em /devfest.
+import Base from './Base.astro';
+import Grao from '../components/Grao.astro';
+import Topo from '../components/Topo.astro';
+import Mae from '../components/Mae.astro';
+import Lista from '../components/Lista.astro';
+import Ticker from '../components/Ticker.astro';
+import Inventario from '../components/Inventario.astro';
+import Orienta from '../components/Orienta.astro';
+import Eventos from '../components/Eventos.astro';
+import Rodape from '../components/Rodape.astro';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  caminho: string;
+  indexar?: boolean;
+  origem: 'devfest' | 'site';
+  etiqueta: string;
+  etiquetaLink?: string;
+  etiquetaLinkNome?: string;
+  sticker: string;
+  linha1: string;
+  linha2: string;
+  destaque: string;
+}
+const p = Astro.props;
+---
+<Base titulo={p.titulo} descricao={p.descricao} caminho={p.caminho} indexar={p.indexar}>
+  <Grao />
+  <Topo etiqueta={p.etiqueta} link={p.etiquetaLink} linkNome={p.etiquetaLinkNome} />
+  <main>
+    <section class="entrada">
+      <div class="entrada-texto">
+        <p class="etiqueta">MASSA (MÃE) CLANDESTINA · FARO</p>
+        <span class="sticker entrada-sticker">{p.sticker}</span>
+        <h1 class="titulo">
+          <span class="titulo-1">{p.linha1}<span class="ponto" aria-hidden="true"></span></span>
+          <span class="titulo-2">{p.linha2} {p.destaque}</span>
+        </h1>
+        <p class="entrada-intro"><slot name="intro" /></p>
+        <Mae />
+      </div>
+      <div class="entrada-lista">
+        <Lista origem={p.origem} />
+      </div>
+    </section>
+    <Ticker />
+    {p.origem === 'devfest' ? (
+      <>
+        <Eventos num="01" devfest />
+        <Inventario num="02" />
+        <Orienta num="03" />
+      </>
+    ) : (
+      <>
+        <Inventario num="01" />
+        <Eventos num="02" />
+        <Orienta num="03" />
+      </>
+    )}
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .entrada {
+    display: grid; gap: 44px; padding: 40px var(--margem) 56px;
+    max-width: 1180px; margin: 0 auto;
+  }
+  @media (min-width: 900px) {
+    .entrada { grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 56px; padding-top: 72px; padding-bottom: 88px; }
+    .entrada-lista { display: flex; justify-content: center; }
+  }
+  .entrada-texto { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  /* Telemóvel: o cartão da lista sobe para o primeiro ecrã e a mãe passa para depois dele. */
+  @media (max-width: 899px) {
+    .entrada { gap: 22px; }
+    .entrada-texto { display: contents; }
+    .entrada-texto > * { justify-self: start; }
+    .entrada-texto > .titulo, .entrada-texto > .entrada-intro { justify-self: stretch; }
+    .entrada-lista { order: 1; margin-top: 14px; }
+    .entrada :global(.mae-fig) { order: 2; margin-top: 18px; }
+  }
+  .entrada-texto .etiqueta { margin: 0; font-size: 11px; letter-spacing: 3px; }
+  .entrada-sticker { margin: 4px 0 -4px 2px; }
+
+  .titulo { margin: 0; font-family: var(--font-display); font-weight: 400; line-height: 0.9; letter-spacing: -0.02em; filter: url(#rough); }
+  .titulo-1 { display: block; color: var(--betao); font-size: clamp(44px, 12vw, 64px); }
+  .titulo-2 { display: block; color: var(--osso); font-size: clamp(50px, 13.6vw, 74px); margin-top: 0.1em; }
+  .ponto { display: inline-block; width: 0.15em; height: 0.15em; background: currentColor; margin-left: 0.09em; }
+
+  .entrada-intro { margin: 0; max-width: 440px; font-size: 14px; line-height: 1.8; color: var(--betao); }
+
+</style>

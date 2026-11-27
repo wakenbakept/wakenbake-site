@@ -1,0 +1,23 @@
+---
+import { SITE, INSTAGRAM_WEB } from '../config.js';
+---
+<section class="ig" aria-labelledby="ig-titulo">
+  <p class="etiqueta" id="ig-titulo">AS FORNADAS SAEM NO INSTAGRAM</p>
+  <a class="ig-botao" href={INSTAGRAM_WEB} data-ig rel="noopener">
+    <span>@{SITE.instagram.toUpperCase()}</span><span aria-hidden="true">→</span>
+  </a>
+  <p class="ig-nota">anúncio à quinta. encomendas até sexta, por DM.<br />segue e não ficas de fora.</p>
+</section>
+
+
+<style>
+  .ig { display: flex; flex-direction: column; gap: 14px; }
+  .ig .etiqueta { margin: 0; }
+  .ig-botao {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    border: 1px solid var(--osso); color: var(--osso); padding: 16px 20px;
+    font-family: var(--font-display); font-size: clamp(24px, 7vw, 34px); letter-spacing: 0.5px; line-height: 1;
+  }
+  .ig-botao:hover { background: var(--osso); color: var(--preto); }
+  .ig-nota { margin: 0; font-size: 13px; line-height: 1.8; color: var(--betao); }
+</style>

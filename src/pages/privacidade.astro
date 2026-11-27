@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import Grao from '../components/Grao.astro';
+import Topo from '../components/Topo.astro';
+import Rodape from '../components/Rodape.astro';
+import { SITE } from '../config.js';
+
+const ATUALIZADO = '27 de novembro de 2026';
+
+// O que tratamos, situação a situação (modelo do Cuidar dos Meus, adaptado).
+const tratamentos = [
+  {
+    situacao: 'Lista de espera',
+    dados: 'Nome, email, página onde te inscreveste, data e versão do consentimento.',
+    para: 'Mandar-te o aviso de cada fornada (antes de sair no Instagram), novidades da Wake n Bake e o aviso de quando o site abrir.',
+    base: 'O teu consentimento, dado na inscrição e confirmado no email.',
+    prazo: 'Até saíres da lista. Sem confirmação do email, não entras.',
+  },
+  {
+    situacao: 'Cópia de segurança da inscrição',
+    dados: 'Os mesmos dados da lista de espera.',
+    para: 'Não perder a tua inscrição se o serviço de email estiver em baixo. Volta a ser enviada sozinha.',
+    base: 'O teu consentimento.',
+    prazo: 'Até ser enviada, no máximo 30 dias.',
+  },
+  {
+    situacao: 'Mensagens e pedidos de eventos',
+    dados: 'Nome, email e o que nos escreves (para ola@ ou por mensagem direta no Instagram).',
+    para: 'Responder-te e, num evento ou quantidade grande, preparar a proposta.',
+    base: 'Diligências que nos pedes antes de um acordo; interesse legítimo em responder.',
+    prazo: '12 meses depois da última mensagem, salvo se houver encomenda.',
+  },
+  {
+    situacao: 'Visita ao site',
+    dados: 'Endereço IP e dados técnicos do navegador.',
+    para: SITE.estatistica
+      ? 'Pôr o site a funcionar, protegê-lo de ataques e de robôs, e contar visitas de forma agregada, sem cookies.'
+      : 'Pôr o site a funcionar, protegê-lo de ataques e de robôs.',
+    base: SITE.estatistica
+      ? 'Interesse legítimo em manter o site seguro e em saber quantas pessoas o visitam.'
+      : 'Interesse legítimo em manter o site seguro.',
+    prazo: 'Registos técnicos da Cloudflare, guardados poucos dias.',
+  },
+];
+---
+<Base titulo="Privacidade · Wake n Bake" descricao="Como a Wake n Bake trata os dados da lista de espera e de quem visita o site." caminho="/privacidade">
+  <Grao />
+  <Topo etiqueta="PRIVACIDADE" />
+  <main class="texto">
+    <p class="etiqueta">ATUALIZADO A {ATUALIZADO.toUpperCase()}</p>
+    <h1>privacidade<span class="ponto" aria-hidden="true"></span></h1>
+    <p class="lead">curto e direto: pedimos o mínimo, usamos só para o que dizemos e sais quando quiseres. sem cookies de publicidade, sem estatísticas que te sigam.</p>
+
+    <nav class="indice" aria-label="Nesta página">
+      <a href="#responsavel">quem trata</a>
+      <a href="#dados">que dados</a>
+      <a href="#ajuda">quem nos ajuda</a>
+      <a href="#direitos">os teus direitos</a>
+      <a href="#cookies">cookies</a>
+    </nav>
+
+    <h2 id="responsavel">QUEM TRATA OS DADOS</h2>
+    <p>O responsável é {SITE.responsavel}. Para qualquer assunto sobre os teus dados: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+    <h2 id="dados">QUE DADOS, PARA QUÊ E DURANTE QUANTO TEMPO</h2>
+    <div class="tabela">
+      <table>
+        <thead><tr><th scope="col">Situação</th><th scope="col">Dados</th><th scope="col">Para quê</th><th scope="col">Fundamento</th><th scope="col">Prazo</th></tr></thead>
+        <tbody>
+          {tratamentos.map((t) => (
+            <tr>
+              <th scope="row" data-label="Situação">{t.situacao}</th>
+              <td data-label="Dados">{t.dados}</td>
+              <td data-label="Para quê">{t.para}</td>
+              <td data-label="Fundamento">{t.base}</td>
+              <td data-label="Prazo">{t.prazo}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p>Não vendemos nem cedemos os teus dados a ninguém. Não fazemos perfis nem decisões automáticas sobre ti. Se saíres da lista, o teu email fica só marcado como «saiu», para garantir que não voltas a receber nada; se pedires, apagamos tudo.</p>
+
+    <h2 id="ajuda">QUEM NOS AJUDA</h2>
+    <p>Serviços que tratam os dados por nossa conta, só para isto:</p>
+    <ul>
+      <li><strong>Brevo</strong> (Sendinblue SAS, França): gere a lista e envia os emails. Guarda os dados na União Europeia.</li>
+      <li><strong>Cloudflare</strong>: aloja o site, faz a verificação anti-robô do formulário (Turnstile), guarda a cópia de segurança das inscrições{SITE.estatistica && ' e conta as visitas sem cookies (Web Analytics)'}.</li>
+      <li><strong>Google</strong> (Gmail): é onde chegam os emails para {SITE.email}.</li>
+      <li><strong>Meta</strong> (Instagram): se nos escreveres por mensagem direta, segundo as regras do próprio Instagram.</li>
+    </ul>
+    <p>A Cloudflare, a Google e a Meta podem tratar dados nos Estados Unidos. Nesses casos, a transferência é feita ao abrigo do Quadro de Privacidade de Dados UE-EUA ou de cláusulas contratuais-tipo aprovadas pela Comissão Europeia.</p>
+
+    <h2 id="direitos">OS TEUS DIREITOS</h2>
+    <p>Podes pedir acesso, correção, apagamento, limitação, portabilidade e opor-te ao tratamento, escrevendo para <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Podes retirar o consentimento quando quiseres, no link que vem no fim de cada email, sem afetar o que foi feito antes. Respondemos no prazo de um mês.</p>
+    <p>Se achares que não tratámos bem os teus dados, podes queixar-te à Comissão Nacional de Proteção de Dados (CNPD), em <a href="https://www.cnpd.pt" rel="noopener">www.cnpd.pt</a>.</p>
+
+    <h2 id="cookies">COOKIES</h2>
+    <p>Não usamos cookies de publicidade nem de estatística. Por isso não há aviso de cookies a pedir-te para aceitar.</p>
+    <ul>
+      <li><strong>Verificação anti-robô (Cloudflare Turnstile):</strong> só carrega quando mexes no formulário. Pode guardar no navegador um identificador técnico de curta duração para distinguir pessoas de robôs. É necessária para proteger a lista de spam.</li>
+      {(SITE.estatistica || SITE.analytics) && <li><strong>Estatística sem cookies (Cloudflare Web Analytics):</strong> conta visitas e mede a velocidade das páginas de forma agregada, sem guardar nada no teu navegador e sem te identificar.</li>}
+    </ul>
+    <p>Este site não tem vídeos, mapas nem botões de redes sociais incorporados. Os links para o Instagram só abrem o Instagram quando carregas neles.</p>
+
+    <h2 id="menores">MENORES</h2>
+    <p>A lista de espera é para maiores de 13 anos. Abaixo disso, a inscrição precisa da autorização de quem exerce as responsabilidades parentais.</p>
+
+    <h2 id="alteracoes">ALTERAÇÕES</h2>
+    <p>Se mudarmos esta política, atualizamos a data no topo. Se a mudança for importante, avisamos quem está na lista.</p>
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .texto { padding: 48px var(--margem) 72px; max-width: 860px; }
+  .texto .etiqueta { margin: 0 0 18px; font-size: 11px; }
+  h1 { margin: 0 0 22px; font-family: var(--font-display); font-weight: 400; font-size: clamp(52px, 14vw, 84px); line-height: 0.9; color: var(--osso); }
+  .ponto { display: inline-block; width: 0.15em; height: 0.15em; background: currentColor; margin-left: 0.09em; }
+  .lead { font-size: 15px; color: var(--osso); margin: 0 0 28px; max-width: 640px; }
+  .indice { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 12px; margin-bottom: 8px; }
+  .indice a { color: var(--betao); text-decoration: underline; text-underline-offset: 3px; }
+  h2 { font-family: var(--font-mono); font-weight: 400; font-size: 12px; letter-spacing: 0.2em; color: var(--betao); margin: 44px 0 12px; padding-top: 18px; border-top: 1px dashed var(--fechado); scroll-margin-top: 24px; }
+  p, li { font-size: 14px; line-height: 1.8; color: var(--osso); max-width: 680px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 18px; }
+  li { margin-bottom: 8px; }
+  strong { font-weight: 700; }
+  a { color: var(--osso); text-decoration: underline; text-underline-offset: 3px; }
+
+  .tabela { margin: 0 0 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.6; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 10px 12px 0; border-bottom: 1px solid var(--linha); color: var(--osso); font-weight: 400; }
+  thead th { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--betao); border-bottom-color: var(--fechado); }
+  tbody th { font-weight: 700; }
+  /* Telemóvel: cada linha vira um cartão, com o nome da coluna antes de cada valor. */
+  @media (max-width: 720px) {
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    table, tbody, tr, th, td { display: block; width: 100%; }
+    tr { border: 1px solid var(--linha); padding: 14px 16px; margin-bottom: 12px; }
+    th, td { border: 0; padding: 4px 0; }
+    tbody th { font-size: 15px; padding-bottom: 8px; }
+    td::before { content: attr(data-label); display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--betao); }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Grao from '../components/Grao.astro';
+import Topo from '../components/Topo.astro';
+import Instagram from '../components/Instagram.astro';
+import Rodape from '../components/Rodape.astro';
+---
+<Base titulo="Estás dentro · Wake n Bake" descricao="Email confirmado. Estás na lista de espera da Wake n Bake." caminho="/confirmado" indexar={false}>
+  <Grao />
+  <Topo etiqueta="LISTA DE ESPERA" />
+  <main class="simples">
+    <span class="sticker">CONFIRMADO</span>
+    <h1 class="simples-titulo">estás <span>dentro.</span></h1>
+    <p class="simples-texto">ficaste na lista. à quinta de manhã, quando houver fornada, sabes antes do instagram.<br />até lá, a mãe vai sendo alimentada.</p>
+    <Instagram />
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .simples { padding: 56px var(--margem) 72px; max-width: 720px; display: flex; flex-direction: column; align-items: flex-start; gap: 26px; }
+  .simples-titulo { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(56px, 16vw, 96px); line-height: 0.9; color: var(--betao); filter: url(#rough); }
+  .simples-titulo span { color: var(--osso); }
+  .simples-texto { margin: 0 0 18px; font-size: 14px; line-height: 1.8; color: var(--betao); }
+  .simples :global(.ig) { width: 100%; }
+</style>

@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+import { SITE } from '../config.js';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  caminho: string;
+  indexar?: boolean;
+}
+
+const { titulo, descricao, caminho, indexar = true } = Astro.props;
+const canonico = new URL(caminho, SITE.base).href;
+const og = new URL('/img/og.png', SITE.base).href;
+---
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonico} />
+    {!indexar && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/Anton-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/SpaceMono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_PT" />
+    <meta property="og:site_name" content="Wake n Bake" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonico} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {SITE.analytics && (
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: SITE.analytics })}></script>
+    )}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

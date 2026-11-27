@@ -1,0 +1,17 @@
+---
+const itens = ['massa (mãe) clandestina', 'farinha, água, sal', 'sem aditivos', '24 horas. zero atalhos.', 'a lista sabe primeiro', 'recolhas em faro', 'quando esgotar, está esgotado'];
+const fita = [...itens, ...itens];
+---
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-fita">
+    {fita.map((t) => (<span class="ticker-item">{t}</span><span class="ticker-ponto">·</span>))}
+  </div>
+</div>
+
+<style>
+  .ticker { overflow: hidden; border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); }
+  .ticker-fita { display: flex; width: max-content; align-items: baseline; padding: 13px 0; animation: ticker 36s linear infinite; }
+  .ticker-item { font-size: 12px; letter-spacing: 3px; color: var(--betao); text-transform: uppercase; white-space: nowrap; padding: 0 22px; }
+  .ticker-ponto { font-size: 12px; color: var(--fechado); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>

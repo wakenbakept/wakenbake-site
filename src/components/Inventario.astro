@@ -1,0 +1,50 @@
+---
+// Inventário sem preços (fase 0). Fotos do pão nunca: só tipo e forma.
+interface Props { num: string; }
+const { num } = Astro.props;
+const produtos = [
+  { nome: 'PÃO DE TRIGO', desc: 'massa-mãe · côdea grossa, miolo aberto', formatos: ['GRANDE', 'BLOCO'] },
+  { nome: 'PÃO DE TRIGO INTEGRAL', desc: 'massa-mãe · denso e fundo', formatos: ['GRANDE', 'BLOCO'] },
+  { nome: 'FOCACCIA', desc: 'azeite, flor de sal, alecrim', formatos: ['AS CENAS'] },
+  { nome: 'BRIOCHE', desc: 'pão de forma · manteiga a sério', formatos: ['EM BREVE'], apagado: true },
+  { nome: 'ROLOS DE CANELA', desc: 'canela e açúcar mascavado', formatos: ['EM BREVE'], apagado: true },
+];
+---
+<section class="inv" id="inventario" aria-labelledby="inv-titulo">
+  <div class="inv-topo">
+    <div>
+      <p class="etiqueta">{num} · INVENTÁRIO</p>
+      <h2 id="inv-titulo" class="inv-titulo">PRODUTOS</h2>
+    </div>
+    <p class="inv-nota">lotes contados.<br />quando esgotar, está esgotado.</p>
+  </div>
+  <ul class="inv-lista">
+    {produtos.map((p) => (
+      <li class:list={['inv-item', { 'inv-apagado': p.apagado }]}>
+        <h3 class="inv-nome">{p.nome}</h3>
+        <p class="inv-desc">{p.desc}</p>
+        <p class="inv-formatos">{p.formatos.map((f) => <span>{f}</span>)}</p>
+      </li>
+    ))}
+  </ul>
+  <p class="inv-rodape">sem loja online. sem preços aqui, por agora. <a href="#orienta">vê como se encomenda</a>.</p>
+</section>
+
+<style>
+  .inv { padding: 64px var(--margem); max-width: 1180px; margin: 0 auto; }
+  .inv-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+  .inv-topo .etiqueta { margin: 0 0 12px; font-size: 11px; letter-spacing: 3px; }
+  .inv-titulo { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(48px, 12vw, 72px); line-height: 0.9; color: var(--osso); filter: url(#rough); }
+  .inv-nota { margin: 0; font-size: 12px; line-height: 1.8; color: var(--betao); }
+  .inv-lista { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--linha); }
+  @media (min-width: 900px) { .inv-lista { grid-template-columns: 1fr 1fr; column-gap: 48px; } }
+  .inv-item { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: baseline; padding: 22px 0; border-bottom: 1px dashed var(--fechado); }
+  .inv-nome { grid-column: 1 / -1; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(28px, 7.4vw, 36px); line-height: 1; color: var(--osso); }
+  .inv-desc { margin: 0; font-size: 13px; color: var(--betao); }
+  .inv-formatos { margin: 0; display: flex; gap: 6px; }
+  .inv-formatos span { font-size: 10px; letter-spacing: 2px; color: var(--osso); border: 1px solid var(--linha); padding: 3px 8px; white-space: nowrap; }
+  .inv-apagado .inv-nome { color: var(--betao-escuro); }
+  .inv-apagado .inv-formatos span { color: var(--betao); border-style: dashed; }
+  .inv-rodape { margin: 22px 0 0; font-size: 12px; color: var(--betao); }
+  .inv-rodape a { color: var(--osso); text-decoration: underline; text-underline-offset: 3px; }
+</style>

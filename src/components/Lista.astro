@@ -1,0 +1,211 @@
+---
+import { SITE } from '../config.js';
+
+interface Props { origem: 'devfest' | 'site'; }
+const { origem } = Astro.props;
+---
+<section class="cartao" aria-labelledby="lista-titulo" data-lista-cartao>
+  <div class="cartao-topo">
+    <h2 class="etiqueta" id="lista-titulo">LISTA DE ESPERA</h2>
+    <span class="etiqueta">LOTE {SITE.lote}</span>
+  </div>
+
+  <p class="cartao-grande" aria-hidden="true">SABES<br /><span>PRIMEIRO.</span></p>
+  <p class="cartao-sub">à quinta de manhã, quando há fornada, a lista recebe o aviso por email. o instagram vem depois.</p>
+
+  <pre class="cartao-dados" aria-label="Como funciona">INGREDIENTES ... FARINHA · ÁGUA · SAL
+FORNADAS ....... SÁB · DOM
+ACESSO ......... ANTES DO INSTAGRAM
+STATUS ......... <span>A FERMENTAR</span></pre>
+
+  <form class="lista" data-lista data-origem={origem} data-sitekey={SITE.turnstile} novalidate>
+    <div class="campo">
+      <label for="lista-nome">NOME</label>
+      <input id="lista-nome" name="nome" type="text" autocomplete="given-name" autocapitalize="words" maxlength="40" required />
+    </div>
+    <div class="campo">
+      <label for="lista-email">EMAIL</label>
+      <input id="lista-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" required />
+    </div>
+    <div class="armadilha" aria-hidden="true">
+      <label for="lista-site">Não preencher</label>
+      <input id="lista-site" name="site" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <label class="consentimento">
+      <input type="checkbox" name="consentimento" required />
+      <span>quero receber os avisos de fornada e as novidades da wake n bake por email. saio quando quiser. <a href="/privacidade">privacidade</a></span>
+    </label>
+    <div class="cf-turnstile"></div>
+    <button type="submit" class="botao" data-botao>ENTRAR NA LISTA</button>
+    <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+    <p class="nota">zero spam. confirmas no email e pronto.</p>
+  </form>
+
+  <div class="feito" data-feito hidden tabindex="-1">
+    <span class="sticker">ESTÁS DENTRO</span>
+    <p>falta um passo: abre o email que te mandámos e carrega em confirmar. sem isso, não ficas na lista.</p>
+    <p>depois disso, na próxima fornada sabes antes de toda a gente.</p>
+    <p class="nota">não chegou? vê no spam ou nas promoções.</p>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-lista]');
+  if (form) {
+    const botao = form.querySelector<HTMLButtonElement>('[data-botao]')!;
+    const aviso = form.querySelector<HTMLElement>('[data-aviso]')!;
+    const feito = document.querySelector<HTMLElement>('[data-feito]')!;
+    const mae = document.querySelector('[data-mae]');
+    const caixa = form.querySelector<HTMLElement>('.cf-turnstile')!;
+    // Em local usa a chave de teste da Cloudflare (passa sempre).
+    const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+    const sitekey = local ? '1x00000000000000000000AA' : form.dataset.sitekey || '';
+    let tsToken = '';
+    let tsPedido = false;
+    let widget: string | undefined;
+
+    // O Turnstile só carrega quando a pessoa mexe no formulário: a página abre mais depressa no telemóvel.
+    const carregarTurnstile = () => {
+      if (tsPedido || !sitekey) return;
+      tsPedido = true;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.addEventListener('load', () => {
+        // @ts-ignore: o Turnstile fica em window quando carrega
+        widget = window.turnstile.render(caixa, {
+          sitekey,
+          action: 'lista',
+          appearance: 'interaction-only',
+          theme: 'dark',
+          language: 'auto',
+          size: 'flexible',
+          callback: (t: string) => { tsToken = t; },
+          'expired-callback': () => { tsToken = ''; },
+          'error-callback': () => { tsToken = ''; },
+        });
+      });
+      document.head.appendChild(s);
+    };
+    form.addEventListener('focusin', carregarTurnstile, { once: true });
+    form.addEventListener('pointerdown', carregarTurnstile, { once: true });
+
+    const token = (): Promise<string> => new Promise((resolve) => {
+      carregarTurnstile();
+      const t0 = Date.now();
+      const ver = () => {
+        if (tsToken || Date.now() - t0 > 10000) resolve(tsToken);
+        else setTimeout(ver, 200);
+      };
+      ver();
+    });
+
+    const ERROS: Record<string, string> = {
+      nome: 'falta o teu nome. só o primeiro chega.',
+      dados: 'esse email não parece bem. confirma e tenta outra vez.',
+      consentimento: 'falta marcares a caixa para entrares na lista.',
+      'anti-spam': 'a verificação anti-robô falhou. espera uns segundos e tenta outra vez.',
+      geral: 'não deu. tenta outra vez daqui a pouco ou manda DM no instagram.',
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      aviso.textContent = '';
+      const dados = new FormData(form);
+      const nome = String(dados.get('nome') || '').trim();
+      const email = String(dados.get('email') || '').trim();
+      if (nome.length < 2) { aviso.textContent = ERROS.nome; form.nome.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { aviso.textContent = ERROS.dados; form.email.focus(); return; }
+      if (!dados.get('consentimento')) { aviso.textContent = ERROS.consentimento; return; }
+
+      botao.disabled = true;
+      botao.textContent = 'A ENVIAR…';
+      try {
+        const turnstile = await token();
+        const r = await fetch('/api/lista', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            nome,
+            email,
+            consentimento: true,
+            origem: form.dataset.origem,
+            pagina: location.pathname,
+            site: String(dados.get('site') || ''),
+            turnstile,
+          }),
+        });
+        const j = await r.json().catch(() => ({ ok: false, erro: 'geral' }));
+        if (j.ok) {
+          form.hidden = true;
+          feito.hidden = false;
+          feito.focus();
+          mae?.classList.add('cheia');
+          return;
+        }
+        aviso.textContent = ERROS[j.erro] || ERROS.geral;
+      } catch {
+        aviso.textContent = ERROS.geral;
+      }
+      tsToken = '';
+      // @ts-ignore: o Turnstile fica em window quando carrega
+      try { if (widget) window.turnstile?.reset(widget); } catch {}
+      botao.disabled = false;
+      botao.textContent = 'ENTRAR NA LISTA';
+    });
+  }
+</script>
+
+<style>
+  .cartao {
+    background: var(--preto); border: 1px solid var(--linha);
+    padding: 26px clamp(18px, 4vw, 30px) 28px; width: 100%; max-width: 440px;
+  }
+  .cartao-topo { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px dashed var(--fechado); padding-bottom: 14px; }
+  .cartao-topo .etiqueta { margin: 0; font-weight: 400; font-size: 11px; letter-spacing: 2px; }
+  .cartao-grande { font-family: var(--font-display); font-size: clamp(40px, 11vw, 52px); line-height: 0.95; margin: 18px 0 6px; color: var(--osso); }
+  .cartao-grande span { color: var(--betao); }
+  .cartao-sub { margin: 10px 0 0; font-size: 12px; line-height: 1.7; color: var(--betao); }
+  .cartao-dados {
+    font-family: var(--font-mono); font-size: clamp(10px, 2.9vw, 12px); line-height: 2.1; color: var(--osso);
+    border-top: 1px dashed var(--fechado); margin: 14px 0 0; padding-top: 12px; white-space: pre; overflow-x: auto;
+  }
+  .cartao-dados span { color: var(--betao); }
+
+  .lista { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; border-top: 1px dashed var(--fechado); padding-top: 20px; }
+  .campo { display: flex; flex-direction: column; gap: 6px; }
+  .campo label { font-size: 11px; letter-spacing: 2px; color: var(--betao); }
+  .campo label span { color: var(--fechado); }
+  .campo input {
+    font: inherit; font-size: 16px; color: var(--osso); background: var(--cartao);
+    border: 1px solid var(--linha); border-radius: 0; padding: 12px 14px; width: 100%;
+  }
+  .campo input:focus { outline: none; border-color: var(--osso); }
+  .armadilha { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .consentimento { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 12px; line-height: 1.7; color: var(--betao); cursor: pointer; }
+  .consentimento input {
+    appearance: none; -webkit-appearance: none; margin: 2px 0 0; width: 20px; height: 20px;
+    border: 1px solid var(--betao); background: transparent; display: grid; place-content: center; cursor: pointer;
+  }
+  .consentimento input::before { content: ''; width: 10px; height: 10px; background: var(--osso); transform: scale(0); transition: transform 0.12s; }
+  .consentimento input:checked { border-color: var(--osso); }
+  .consentimento input:checked::before { transform: scale(1); }
+  .consentimento a { color: var(--osso); text-decoration: underline; text-underline-offset: 3px; }
+
+  .cf-turnstile:empty { display: none; }
+
+  .botao {
+    font-family: var(--font-display); font-size: 20px; letter-spacing: 0.5px; color: var(--preto);
+    background: var(--osso); border: 1px solid var(--osso); padding: 15px 20px; cursor: pointer; width: 100%;
+  }
+  .botao:hover { background: var(--preto); color: var(--osso); }
+  .botao:disabled { background: var(--fechado); border-color: var(--fechado); color: var(--osso); cursor: wait; }
+  .aviso { margin: 0; font-size: 12px; color: var(--osso); min-height: 0; }
+  .aviso:empty { display: none; }
+  .nota { margin: 0; font-size: 11px; letter-spacing: 1px; color: var(--betao); text-align: center; }
+
+  .feito { margin-top: 24px; border-top: 1px dashed var(--fechado); padding-top: 26px; outline: none; }
+  .feito p { font-size: 14px; line-height: 1.8; color: var(--osso); margin: 20px 0 0; }
+  .feito .nota { text-align: left; margin-top: 12px; }
+</style>
